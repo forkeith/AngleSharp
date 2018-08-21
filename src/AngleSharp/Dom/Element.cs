@@ -369,6 +369,23 @@
             return CssParser.Default.ParseSelector(selectors).Match(this);
         }
 
+        public IElement Closest(String selectors)
+        {
+            IElement node = this;
+            while (node != null)
+            {
+                if (node.Matches(selectors))
+                {
+                    return node;
+                }
+                else
+                {
+                    node = node.ParentElement;
+                }
+            }
+            return null;
+        }
+
         public override INode Clone(Boolean deep = true)
         {
             var node = new Element(Owner, LocalName, _prefix, _namespace, Flags);
